@@ -1,11 +1,12 @@
-####################################################################################
+########################################################################################
 ### Pass Cracker
 ### Description: Word Documents password cracker based on dictionary attack
 ### Author: Daniel Fernandez Perez
 ### Notes: 
+###  - Based on the code by Gabe Marshall: https://gist.github.com/gabemarshall/9372073
 ###  - sys.exit(1) if finished without errors
 ###  - sys.exit(2) if finished with any error
-####################################################################################
+########################################################################################
 
 # Required imports:
 ## sys for accessing command line arguments and system functions
@@ -65,7 +66,13 @@ def main(argv):
 				filename = arg.lower()
 	
 	try:
-		password_file = open ( wordlist, 'r' )
+		open(filename, 'r')
+	except:
+		print('Cannot open file')
+		sys.exit(2)
+		
+	try:
+		password_file = open(wordlist, 'r')
 		passwords = password_file.readlines()
 		password_file.close()
 		passwords = [item.rstrip('\n') for item in passwords]
@@ -73,8 +80,12 @@ def main(argv):
 		print('Cannot open wordlist')
 		sys.exit(2)
 		
-	results = open('results.txt', 'w')
-
+	try:
+		results = open('results.txt', 'w')
+	except:
+		print('Cannot open/create results doc')
+		sys.exit(2)
+		
 	for password in passwords:
 		if (found == False):
 			#print(password)
@@ -87,6 +98,7 @@ def main(argv):
 					results.write(password)
 					results.close()
 			except:
+				#no output to be displayed
 				pass
 		else:
 			break
