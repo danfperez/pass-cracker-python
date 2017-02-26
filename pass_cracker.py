@@ -27,7 +27,7 @@ def displayHelp():
 
 # timeit - Function to calculate the time a given function takes
 # input
-## funtion to monitor
+## function to monitor
 # output
 ## message on console with time function took to execute
 # Note: function adapted from 
@@ -37,7 +37,7 @@ def timeit(func):
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
-        print ('The password has been found in {:.5f} seconds.'.format(time.time() - start))
+        print ('The password search has been executed in {:.5f} seconds.'.format(time.time() - start))
         return result
     return wrapper
 
