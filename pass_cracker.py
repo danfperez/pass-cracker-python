@@ -12,8 +12,9 @@
 ## sys for accessing command line arguments and system functions
 ## getopt for parsing coomand line arguments
 ## win32.com for using windows applications, external library, requires instalation
-
+from __future__ import print_function
 import sys, getopt, time, win32com.client
+
 
 # displayHelp - Function to display usage help
 # input:
@@ -53,14 +54,17 @@ def timeit(func):
 @timeit
 def getPass(word, filename, passwords, results):
 	found = False
+	counter = 0
 	
 	for password in passwords:
 		if (found == False):
+			counter = counter+1
+			print ('A total of '+str(counter)+' passwords checked so far.', end='\r')
 			try:
 				word.Documents.Open(filename, False, True, None, password)
 				if (word.Documents[0].Content):
 					found = True
-					print('Password found: ' + password)
+					print('\nPassword found: ' + password)
 					print('Password has been stored in results.txt file.')
 					results.write(password)
 					results.close()
@@ -131,7 +135,7 @@ def main(argv):
 		sys.exit(2)
 		
 	print('Trying to open file: ' + '"' + filename + '"')
-	print('With dictionary: ' +  '"' + wordlist + '"')
+	print('With dictionary: ' +  '"' + wordlist + '". The dictionary contains ' + str(len(passwords)) +' potential passwords.')
 
 	getPass(word, filename, passwords, results)
 	
